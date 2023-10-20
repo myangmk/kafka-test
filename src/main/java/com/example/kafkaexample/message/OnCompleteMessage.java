@@ -1,7 +1,7 @@
 package com.example.kafkaexample.message;
 
 
-record OnCompleteMessage(
+public record OnCompleteMessage(
         String title,
         String someMessage
 ) {

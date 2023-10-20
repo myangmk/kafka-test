@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 class KafkaOnCompleteConsumer implements AcknowledgingMessageListener<String, OnCompleteMessage> {
 
     @Override
-    @KafkaListener(topics = "result", containerFactory = "kafkaListenerContainerFactory")
+    @KafkaListener(topics = "newnew", containerFactory = "kafkaListenerContainerFactory")
     public void onMessage(ConsumerRecord<String, OnCompleteMessage> data, Acknowledgment acknowledgment) {
         acknowledgment.acknowledge();
         OnCompleteMessage message = data.value();

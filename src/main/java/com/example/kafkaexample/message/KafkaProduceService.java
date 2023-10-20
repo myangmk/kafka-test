@@ -14,12 +14,12 @@ import java.util.concurrent.CompletableFuture;
 @Slf4j
 @RequiredArgsConstructor
 class KafkaProduceService {
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, OnCompleteMessage> kafkaTemplate;
 
-    public String publishResultTopic() {
-        String message = "publish message " + UUID.randomUUID();
+    public String publishResultTopic(String topic) {
+        OnCompleteMessage message = new OnCompleteMessage("title", "someMessage");
 
-        CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send("result", message);
+        CompletableFuture<SendResult<String, OnCompleteMessage>> future = kafkaTemplate.send(topic, message);
         future.whenComplete((result, ex) -> {
             if (ex == null) {
                 System.out.println("Sent message=[" + message +
