@@ -3,4 +3,4 @@ spring:
     bootstrap-servers: localhost:29092,localhost:39092,localhost:49092
     consumer:
       properties:
-        max.poll.interval.ms: 3000 # 실험을 위해 일부러 3초로 (default: 5분)
+        max.poll.interval.ms: 2000 # 왜 안먹지.. (default: 5분)

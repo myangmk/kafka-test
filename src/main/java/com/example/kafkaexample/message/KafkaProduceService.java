@@ -16,8 +16,8 @@ import java.util.concurrent.CompletableFuture;
 class KafkaProduceService {
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    public String publishResultTopic(String topic) {
-        OnCompleteMessage message = new OnCompleteMessage("title", "someMessage");
+    public String publishResultTopic(String topic, String title) {
+        OnCompleteMessage message = new OnCompleteMessage(title, "someMessage");
 
         CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send(topic, message.toString());
         future.whenComplete((result, ex) -> {

@@ -15,13 +15,13 @@ class KafkaOnCompleteConsumer implements AcknowledgingMessageListener<String, St
     @KafkaListener(topics = "newnew", containerFactory = "kafkaListenerContainerFactory")
     public void onMessage(ConsumerRecord<String, String> data, Acknowledgment acknowledgment) {
         acknowledgment.acknowledge();
-        String message = data.value();
-        log.info("Got a message!: {}", message);
         try {
-            Thread.sleep(10000);
-            log.info("result message: {}", message);
+            log.info("sleep start:" +  data.value());
+            Thread.sleep(1000 * 30);
+            log.info("sleep end: {}", data.value());
         } catch (Exception e) {
             log.error("Failed consuming message: ", e);
+            throw new RuntimeException(e);
         }
     }
 }

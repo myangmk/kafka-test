@@ -1,15 +1,8 @@
+
 ### run
-docker container exec -it kafka-example-kafka1-1 bash
+`./gradlew build`
 
-docker-compose exec kafka1 kafka-topics --create --topic result --bootstrap-server kafka1:9091 --replication-factor 3 --partitions 3
-docker-compose exec kafka1 kafka-topics --describe --topic result --bootstrap-server kafka1:9091
-
-
-
-### in container
-kafka-topics --describe --topic result --bootstrap-server kafka-1:29092
-docker-compose exec kafka1 kafka-topics --describe --topic result --bootstrap-server kafka1:9091
-
+`java -jar -Dserver.port=8111 build/libs/kafka-example-0.0.1-SNAPSHOT.jar`
 
 ### cli
 토픽 확인
