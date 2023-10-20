@@ -15,12 +15,11 @@ import java.util.concurrent.CompletableFuture;
 @RequiredArgsConstructor
 class KafkaProduceService {
     private final KafkaTemplate<String, String> kafkaTemplate;
-    private final NewTopic resultTopic;
 
     public String publishResultTopic() {
-        String message = "publish message to my_topic_1 " + UUID.randomUUID();
+        String message = "publish message " + UUID.randomUUID();
 
-        CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send(resultTopic.name(), message);
+        CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send("result", message);
         future.whenComplete((result, ex) -> {
             if (ex == null) {
                 System.out.println("Sent message=[" + message +
