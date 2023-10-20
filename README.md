@@ -1,5 +1,10 @@
 
 ### run
+
+* 카프카 실행
+* `docker-compose up -d`
+
+* 어플리케이션 인스턴스 실행
 `./gradlew build`
 
 `java -jar -Dserver.port=8111 build/libs/kafka-example-0.0.1-SNAPSHOT.jar`
