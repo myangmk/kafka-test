@@ -9,13 +9,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-class KafkaOnCompleteConsumer implements AcknowledgingMessageListener<String, OnCompleteMessage> {
+class KafkaOnCompleteConsumer implements AcknowledgingMessageListener<String, String> {
 
     @Override
     @KafkaListener(topics = "newnew", containerFactory = "kafkaListenerContainerFactory")
-    public void onMessage(ConsumerRecord<String, OnCompleteMessage> data, Acknowledgment acknowledgment) {
+    public void onMessage(ConsumerRecord<String, String> data, Acknowledgment acknowledgment) {
         acknowledgment.acknowledge();
-        OnCompleteMessage message = data.value();
+        String message = data.value();
         log.info("Got a message!: {}", message);
         try {
             Thread.sleep(10000);
