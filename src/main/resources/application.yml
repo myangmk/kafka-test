@@ -1,3 +1,6 @@
 spring:
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: localhost:9091,localhost:9092,localhost:9093
+    consumer:
+      properties:
+        max.poll.interval.ms: 3000 # 실험을 위해 일부러 3초로 (default: 5분)

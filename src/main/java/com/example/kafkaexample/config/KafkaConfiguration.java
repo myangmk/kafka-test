@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.*;
+import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.util.HashMap;
@@ -32,6 +33,7 @@ class KafkaConfiguration {
     public ProducerFactory<String, String> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+        configProps.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         return new DefaultKafkaProducerFactory<>(configProps);
@@ -46,7 +48,7 @@ class KafkaConfiguration {
     public ConsumerFactory<String, String> consumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "foo"); // TODO: 2023/09/18 change to real group_id
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, "foo");
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         return new DefaultKafkaConsumerFactory<>(props);
@@ -56,12 +58,13 @@ class KafkaConfiguration {
     public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, String> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
+        factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL);
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
 
     @Bean
     public NewTopic resultTopic() {
-        return new NewTopic("result", 1, (short) 1);
+        return new NewTopic("result", 3, (short) 3);
     }
 }
