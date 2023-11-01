@@ -20,3 +20,20 @@
 - docker-compose exec kafka-1 kafka-topics --list --bootstrap-server kafka-1:9092
 토픽 삭제
 - docker-compose exec kafka-1 kafka-topics --delete --topic newnew --bootstrap-server kafka-1:9092
+
+
+### perf test
+`docker-compose exec kafka-1 kafka-producer-perf-test \
+--topic newnew \
+--record-size 104 \
+--num-records 30000 \
+--throughput -1 \
+--producer-props \
+bootstrap.servers=kafka-1:9092`
+
+
+```
+30000 records sent, 78947.368421 records/sec (7.83 MB/sec), 
+101.67 ms avg latency, 163.00 ms max latency, 98 ms 50th, 134 ms 95th, 138 ms 99th, 138 ms 99.9th.
+
+```
