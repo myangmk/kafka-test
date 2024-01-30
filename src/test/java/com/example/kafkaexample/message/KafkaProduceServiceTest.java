@@ -13,7 +13,7 @@ class KafkaProduceServiceTest {
 
     @Test
     void send() {
-        produceService.publishResultTopic("newnew", "4");
+        produceService.publishResultTopic("newnew", "5");
     }
 
 }
